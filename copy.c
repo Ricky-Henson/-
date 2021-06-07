@@ -1,10 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<fcntl.h> // O_CREAT O_RDWD
+#include<fcntl.h> // O_CREAT O_WRONLY O_RDONLY O_EXCL O_RDWR
 #include<unistd.h> // read(), write(), close()
 #include<sys/stat.h> // fstat
 // Note : O_EXCL if file exists, nothing u can do
-// O_APPEND | O_RDWR
+// O_APPEND (concatenate)
 int main(int argc, char* argv[]){
   char *buf;
   int file2, file1,fileread;
@@ -27,15 +27,15 @@ int main(int argc, char* argv[]){
     fstat(file1, &stbuf);
     fileread = stbuf.st_size;
     buf = (char *) malloc (fileread +1);
-    fileread = read(file1, buf, fileread);
+    read(file1, buf, fileread);
     // printf("%s\n", buf);
     write(file2, buf, fileread);
-    close(file1);
+    close(file1); close(file2);
   }
 //   else{
 //       printf("%s doesn't exist\n", argv[1]);
 //       exit(1);
 //   }
-  close(file2); close(file1);
+  close(file2);
   return 0;
 }
