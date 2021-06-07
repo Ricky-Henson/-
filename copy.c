@@ -7,7 +7,7 @@
 // O_APPEND (concatenate)
 int main(int argc, char* argv[]){
   char *buf;
-  int file2, file1,fileread;
+  int file2, file1, filesize;
   struct stat stbuf;
   // output file opened or created
   if(argc != 3){
@@ -25,17 +25,16 @@ int main(int argc, char* argv[]){
   }
   else{ // there are things to read from the input
     fstat(file1, &stbuf);
-    fileread = stbuf.st_size;
-    buf = (char *) malloc (fileread +1);
-    read(file1, buf, fileread);
+    filesize = stbuf.st_size;
+    buf = (char *) malloc (filesize +1);
+    read(file1, buf, filesize);
     // printf("%s\n", buf);
-    write(file2, buf, fileread);
+    write(file2, buf, filesize);
     close(file1); close(file2);
   }
 //   else{
 //       printf("%s doesn't exist\n", argv[1]);
 //       exit(1);
 //   }
-  close(file2);
   return 0;
 }
