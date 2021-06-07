@@ -1,19 +1,21 @@
- #include<stdio.h>
+#include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include<fcntl.h>
-#include<unistd.h>
+#include<fcntl.h> // O_CREAT O_RDWD
+#include<unistd.h> // read(), write(), close()
+#include<sys/stat.h> // fstat
 // Note : O_EXCL if file exists, nothing u can do
 // O_APPEND | O_RDWR
 int main(int argc, char* argv[]){
-  char buf[1024];
+  char *buf;
   int file2, file1,fileread;
+  struct stat stbuf;
   // output file opened or created
   if(argc != 3){
       fprintf(stderr, "usage: %s sourceFile targetFile\n", argv[0]);
       exit(1);
   }
-  if((file2 = open(argv[2], O_CREAT | O_WRONLY, 0600))==-1){ // if fail to open
+  if((file2 = open(argv[2], O_CREAT | O_WRONLY, 0600)) < 0){ // if fail to open
     perror("open");
   }
   // lets open the input file
@@ -23,7 +25,10 @@ int main(int argc, char* argv[]){
       exit(1);
   }
   else{ // there are things to read from the input
-    fileread = read(file1, buf, sizeof(buf) + 1); // avoid buffer overflow
+    fstat(file1, &stbuf);
+    fileread = stbuf.st_size;
+    buf = (char *) malloc (fileread +1);
+    fileread = read(file1, buf, fileread);
     // printf("%s\n", buf);
     write(file2, buf, fileread);
     close(file1);
