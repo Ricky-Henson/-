@@ -36,6 +36,6 @@ int main(int argc, char* argv[]){
 //       printf("%s doesn't exist\n", argv[1]);
 //       exit(1);
 //   }
-  close(file2);
+  close(file2); close(file1);
   return 0;
 }
