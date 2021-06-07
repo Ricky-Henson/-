@@ -1,6 +1,5 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<string.h>
 #include<fcntl.h> // O_CREAT O_RDWD
 #include<unistd.h> // read(), write(), close()
 #include<sys/stat.h> // fstat
