@@ -5,6 +5,8 @@
 #include<sys/stat.h> // fstat
 // Note : O_EXCL if file exists, nothing u can do
 // O_APPEND (concatenate)
+
+// ./a.out copy.txt anyfile.txt
 int main(int argc, char* argv[]){
   char *buf;
   int file2, file1, filesize;
