@@ -6,6 +6,7 @@
 #include<unistd.h>
 #include<sys/stat.h>
 
+// ./a.out tolower tolower.txt
 int main(int argc, char *argv[]){
     char *buf;
     int file, fileSize=0;
